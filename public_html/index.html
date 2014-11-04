@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="collection">
+    <head>
+        <title> BD</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <link rel="stylesheet" type="text/css" href="js/libs/bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/style.css"/>
+        <script type="text/javascript" src="js/libs/angular.js/angular.js" ></script>
+        <script type="text/javascript" src="js/app.js" ></script>
+
+        <div class="container">
+            <div  ng-controller="CollectionController as collection"style="padding: 5px 5px"  class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    <div class="thumbnail">
+                        <a ng-click="collection.desc()" class="fleche previous" href="" ></a>
+                        <a ng-click="collection.inc()" class="fleche next" href="" ></a>
+                        <img  class="img-thumbnail" ng-src="{{collection.product[collection.i].img_path}}" alt="XIII" width="425px" height="310px"/>
+                        <div class="caption">
+                            <h3 class="titre"> 
+                                {{collection.product[collection.i].titre}}  
+                                {{collection.product[collection.i].possede}}/{{collection.product[collection.i].total}} 
+                                <span ng-hide="collection.estAJour(collection.product[collection.i].possede,
+                                                                   collection.product[collection.i].total)"
+                                      ng-click="collection.addTome(collection.product[collection.i])"                             
+                                      class="glyphicon glyphicon-plus-sign">
+                                </span> 
+                            </h3>
+                            <div ng-show="collection.product[collection.i].nextRelease">
+                                Prochaine sortie: {{collection.product[collection.i].nextRelease}}
+                            </div>
+                            <div ng-show="collection.estFini(collection.product[collection.i].fini)">
+                                <span class="label label-danger"> Série terminée </span>  
+                            </div>
+                            <div ng-show="collection.estAJour(collection.product[collection.i].possede,
+                                                              collection.product[collection.i].total)">
+                                <span class="label label-success"> A jour</span>
+                            </div> <br/>
+                            <div ng-show="collection.error == true" class="alert alert-danger text-center" role="alert"> 
+                                <strong> {{collection.error_text}} </strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+        </div>
+    </body>
+</html>
