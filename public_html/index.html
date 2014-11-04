@@ -24,24 +24,40 @@
                                 {{collection.product[collection.i].titre}}  
                                 {{collection.product[collection.i].possede}}/{{collection.product[collection.i].total}} 
                                 <span ng-hide="collection.estAJour(collection.product[collection.i].possede,
-                                                                   collection.product[collection.i].total)"
+                                                    collection.product[collection.i].total)"
                                       ng-click="collection.addTome(collection.product[collection.i])"                             
                                       class="glyphicon glyphicon-plus-sign">
                                 </span> 
                             </h3>
-                            <div ng-show="collection.product[collection.i].nextRelease">
-                                Prochaine sortie: {{collection.product[collection.i].nextRelease}}
-                            </div>
-                            <div ng-show="collection.estFini(collection.product[collection.i].fini)">
-                                <span class="label label-danger"> Série terminée </span>  
-                            </div>
-                            <div ng-show="collection.estAJour(collection.product[collection.i].possede,
-                                                              collection.product[collection.i].total)">
-                                <span class="label label-success"> A jour</span>
-                            </div> <br/>
-                            <div ng-show="collection.error == true" class="alert alert-danger text-center" role="alert"> 
-                                <strong> {{collection.error_text}} </strong>
-                            </div>
+                            <section ng-controller="PanelController as panel">
+                                <ul class="nav nav-pills">
+                                    <li ng-class="{active: panel.isSelected(1)}">
+                                        <a ng-click="panel.selectTab(1)" href="#"> Infos générales </a>
+                                    </li>
+                                    <li ng-class="{active: panel.isSelected(2)}">
+                                        <a ng-click="panel.selectTab(2)" href="#"> Modifier</a>
+                                    </li>
+                                </ul>    
+
+                                <div ng-show="panel.isSelected(1)">    
+                                    <div ng-show="collection.product[collection.i].nextRelease">
+                                        Prochaine sortie: {{collection.product[collection.i].nextRelease}}
+                                    </div>
+                                    <div ng-show="!collection.estFini(collection.product[collection.i].fini)">
+                                        <span class="label label-danger"> Série terminée </span>  
+                                    </div>
+                                    <div ng-show="collection.estAJour(collection.product[collection.i].possede,
+                                                    collection.product[collection.i].total)">
+                                        <span class="label label-success"> A jour</span>
+                                    </div> <br/>
+                                </div>
+                                <div ng-show="panel.isSelected(2)">
+                                    <h4> Réglages </h4>
+                                </div>    
+                                <div ng-show="collection.error == true" class="alert alert-danger text-center" role="alert"> 
+                                    <strong> {{collection.error_text}} </strong>
+                                </div>
+                            </section>
                         </div>
                     </div>
                 </div>
