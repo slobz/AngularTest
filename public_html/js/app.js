@@ -42,16 +42,6 @@
                 return possede === total;
             };
 
-            this.addTome = function(tome) {
-                $http.post('http://localhost/WS/Albums/album.php', {action: 'add', titre: tome.titre}).success(function(data) {
-                    console.log(data);
-                    tome.possede++;
-                }).error(function() {
-                    liste.error = true;
-                    liste.error_text = 'Erreur lors de l\'ajout';
-                });
-            };
-
             //======================================================================
 
         }]);
@@ -71,5 +61,20 @@
 
 
     });
+
+    // Controleur des paramètres
+    app.controller('ParameterController',['$http', function($http) {
+
+        this.addTome = function(tome) {
+            $http.post('http://localhost/WS/Albums/album.php', {action: 'add', titre: tome.titre}).success(function(data) {
+                console.log(data);
+                tome.possede++;
+            }).error(function() {
+                liste.error = true;
+                liste.error_text = 'Erreur lors de l\'ajout';
+            });
+        };
+    }]);
+
 
 })();
