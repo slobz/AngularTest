@@ -27,8 +27,7 @@
                                 {{collection.product[collection.i].possede}}/{{collection.product[collection.i].total}} 
                             </h3>
                             <section ng-controller="PanelController
-                                        as
-                                        panel">
+                                        as panel">
                                 <ul class="nav nav-pills">
                                     <li ng-class="{active: panel.isSelected(1)}">
                                         <a ng-click="panel.selectTab(1)" href="#"> Infos générales </a>
@@ -45,7 +44,7 @@
                                     <div ng-show="collection.product[collection.i].nextRelease">
                                         Prochaine sortie: {{collection.product[collection.i].nextRelease}}
                                     </div>
-                                    <div ng-show="!collection.estFini(collection.product[collection.i].fini)">
+                                    <div ng-hide="collection.estFini(collection.product[collection.i].fini)">
                                         <span class="label label-danger"> Série terminée </span>  
                                     </div>
                                     <div ng-show="collection.estAJour(collection.product[collection.i].possede,
@@ -53,7 +52,8 @@
                                         <span class="label label-success"> A jour</span>
                                     </div> <br/>
                                 </div>
-                                <div ng-controller="ParameterController as Parameter" ng-show="panel.isSelected(2)">
+                                <div ng-controller="ParameterController
+                                                as Parameter" ng-show="panel.isSelected(2)">
                                     <h4> Réglages </h4>
                                     <div class="btn-group">
                                         <button ng-hide="collection.estAJour(collection.product[collection.i].possede,
@@ -62,7 +62,9 @@
                                                 type="button" class="btn btn-default"> 
                                             Ajout tome 
                                         </button>
-                                        <button type="button" class="btn btn-default"> 
+                                        <button ng-hide="collection.estVide(collection.product[collection.i].possede)"
+                                                ng-click="Parameter.removeTome(collection.product[collection.i])"
+                                                type="button" class="btn btn-default"> 
                                             Retirer tome 
                                         </button>
                                         <button type="button" class="btn btn-default"> 

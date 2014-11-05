@@ -39,7 +39,11 @@
             };
 
             this.estAJour = function(possede, total) {
-                return possede === total;
+                return possede == total;
+            };
+            
+            this.estVide = function(possede){
+                return possede === 0;
             };
 
             //======================================================================
@@ -74,6 +78,17 @@
                 liste.error_text = 'Erreur lors de l\'ajout';
             });
         };
+        
+        this.removeTome = function(tome) {
+            $http.post('http://localhost/WS/Albums/album.php', {action: 'rm', titre: tome.titre}).success(function(data) {
+                console.log(data);
+                tome.possede--;
+            }).error(function() {
+                liste.error = true;
+                liste.error_text = 'Erreur lors du retrait';
+            });
+        };
+        
     }]);
 
 
