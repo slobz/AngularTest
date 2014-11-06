@@ -27,7 +27,8 @@
                                 {{collection.product[collection.i].possede}}/{{collection.product[collection.i].total}} 
                             </h3>
                             <section ng-controller="PanelController
-                                        as panel">
+                                        as
+                                        panel">
                                 <ul class="nav nav-pills">
                                     <li ng-class="{active: panel.isSelected(1)}">
                                         <a ng-click="panel.selectTab(1)" href="#"> Infos générales </a>
@@ -37,9 +38,16 @@
                                             <span class="glyphicon glyphicon-cog"></span> Modifier 
                                         </a>
                                     </li>
+                                    <li ng-class="{active: panel.isSelected(3)}">
+                                        <a ng-click="panel.selectTab(3)" href="#">
+                                            <span class="glyphicon glyphicon-plus"></span>Ajouter collection
+                                        </a>
+                                    </li>
                                 </ul>    
 
                                 <!-- Onglets -->
+
+                                <!-- Onglet général (Affiché par défaut) --> 
                                 <div ng-show="panel.isSelected(1)">    
                                     <div ng-show="collection.product[collection.i].nextRelease">
                                         Prochaine sortie: {{collection.product[collection.i].nextRelease}}
@@ -52,8 +60,11 @@
                                         <span class="label label-success"> A jour</span>
                                     </div> <br/>
                                 </div>
-                                <div ng-controller="ParameterController
-                                                as Parameter" ng-show="panel.isSelected(2)">
+                                <!-- Onglet Parametre -->
+                                <div ng-show="panel.isSelected(2)"
+                                     ng-controller="ParameterController
+                                                     as
+                                                     Parameter" >
                                     <h4> Réglages </h4>
                                     <div class="btn-group">
                                         <button ng-hide="collection.estAJour(collection.product[collection.i].possede,
@@ -78,6 +89,32 @@
                                         </button>
                                     </div>
                                 </div>  
+                                <!-- Onglet ajout tomes -->
+                                <div ng-show="panel.isSelected(3)">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="titreInput"> Titre </label>
+                                            <input id="titreInput" class="form-control" type="text"  placeholder="Titre..."/>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <label for="possedeInput"> Tome(s) possedé(s) </label>
+                                                <input id="possedeInput" class="form-control" type="text" />
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <label for="totalInput"> Nombre total de tomes </label>
+                                                <input id="totalInput" class="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="termineeInput"> Série terminée </label>
+                                            <input id="termineeInput"  type="checkbox" value="1" />
+                                        </div>   
+                                        <div>
+                                            <button type="button" class="btn btn-primary center-block">Ajouter</button>
+                                        </div>
+                                    </form>
+                                </div>
                                 <!-- Fin onglets -->
 
                                 <div ng-show="collection.error == true" class="alert alert-danger text-center" role="alert"> 
