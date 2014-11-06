@@ -58,19 +58,22 @@
                                     <div class="btn-group">
                                         <button ng-hide="collection.estAJour(collection.product[collection.i].possede,
                                                                     collection.product[collection.i].total)" 
-                                                ng-click="Parameter.addTome(collection.product[collection.i])" 
+                                                ng-click="Parameter.addTomePossede(collection.product[collection.i])" 
                                                 type="button" class="btn btn-default"> 
                                             Ajout tome 
                                         </button>
                                         <button ng-hide="collection.estVide(collection.product[collection.i].possede)"
-                                                ng-click="Parameter.removeTome(collection.product[collection.i])"
+                                                ng-click="Parameter.removeTomePossede(collection.product[collection.i])"
                                                 type="button" class="btn btn-default"> 
                                             Retirer tome 
                                         </button>
-                                        <button type="button" class="btn btn-default"> 
+                                        <button ng-click="Parameter.addTome(collection.product[collection.i])" 
+                                                type="button" class="btn btn-default"> 
                                             Augmenter total 
                                         </button>
-                                        <button type="button" class="btn btn-default"> 
+                                        <button ng-hide ="collection.unTome(collection.product[collection.i].total)" 
+                                                ng-click="Parameter.removeTome(collection.product[collection.i])" 
+                                                type="button" class="btn btn-default"> 
                                             Retirer total 
                                         </button>
                                     </div>

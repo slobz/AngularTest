@@ -42,8 +42,12 @@
                 return possede == total;
             };
             
-            this.estVide = function(possede){
-                return possede === 0;
+            this.estVide = function(nbrTome){
+                return nbrTome === 0;
+            };
+            
+            this.unTome = function(nbrTome){
+                return nbrTome == 1;
             };
 
             //======================================================================
@@ -69,8 +73,10 @@
     // Controleur des paramètres
     app.controller('ParameterController',['$http', function($http) {
 
-        this.addTome = function(tome) {
-            $http.post('http://localhost/WS/Albums/album.php', {action: 'add', titre: tome.titre}).success(function(data) {
+        var URL = 'http://localhost/WS/Albums/album.php';
+
+        this.addTomePossede = function(tome) {
+            $http.post(URL, {action: 'addPossede', titre: tome.titre}).success(function(data) {
                 console.log(data);
                 tome.possede++;
             }).error(function() {
@@ -79,10 +85,35 @@
             });
         };
         
-        this.removeTome = function(tome) {
-            $http.post('http://localhost/WS/Albums/album.php', {action: 'rm', titre: tome.titre}).success(function(data) {
+        
+        this.addTome = function(tome) {
+            $http.post(URL, {action: 'add', titre: tome.titre}).success(function(data) {
+                console.log(data);
+                tome.total++;
+            }).error(function() {
+                liste.error = true;
+                liste.error_text = 'Erreur lors de l\'ajout';
+            });
+        };
+        
+        this.removeTomePossede = function(tome) {
+            $http.post(URL, {action: 'removePossede', titre: tome.titre}).success(function(data) {
                 console.log(data);
                 tome.possede--;
+            }).error(function() {
+                liste.error = true;
+                liste.error_text = 'Erreur lors du retrait';
+            });
+        };
+        
+        this.removeTome = function(tome) {
+            $http.post(URL, {action: 'remove', titre: tome.titre}).success(function(data) {
+                console.log(data);
+                
+                if(tome.possede === tome.total)
+                    tome.possede--;
+                
+                tome.total--;
             }).error(function() {
                 liste.error = true;
                 liste.error_text = 'Erreur lors du retrait';
