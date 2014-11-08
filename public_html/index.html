@@ -13,10 +13,10 @@
 
         <div class="container">
             <div  ng-controller="CollectionController
-                    as
-                    collection"style="padding: 5px 5px"  class="row">
-                <div class="col-sm-3"></div>
-                <div class="col-sm-6">
+                                as
+                                collection"style="padding: 5px 5px"  class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
                     <div class="thumbnail">
                         <a ng-click="collection.desc()" class="fleche previous" href="" ></a>
                         <a ng-click="collection.inc()" class="fleche next" href="" ></a>
@@ -27,11 +27,11 @@
                                 {{collection.product[collection.i].possede}}/{{collection.product[collection.i].total}} 
                             </h3>
                             <section ng-controller="PanelController
-                                        as
-                                        panel">
+                                                        as
+                                                        panel">
                                 <ul class="nav nav-pills">
                                     <li ng-class="{active: panel.isSelected(1)}">
-                                        <a ng-click="panel.selectTab(1)" href="#"> Infos générales </a>
+                                        <a ng-click="panel.selectTab(1)" href="#"> Infos </a>
                                     </li>
                                     <li ng-class="{active: panel.isSelected(2)}">
                                         <a ng-click="panel.selectTab(2)" href="#"> 
@@ -40,7 +40,7 @@
                                     </li>
                                     <li ng-class="{active: panel.isSelected(3)}">
                                         <a ng-click="panel.selectTab(3)" href="#">
-                                            <span class="glyphicon glyphicon-plus"></span>Ajouter collection
+                                            <span class="glyphicon glyphicon-plus"></span>Ajouter 
                                         </a>
                                     </li>
                                 </ul>    
@@ -52,23 +52,23 @@
                                     <div ng-show="collection.product[collection.i].nextRelease">
                                         Prochaine sortie: {{collection.product[collection.i].nextRelease}}
                                     </div>
-                                    <div ng-hide="collection.estFini(collection.product[collection.i].fini)">
+                                    <div ng-show="collection.estFini(collection.product[collection.i].fini)">
                                         <span class="label label-danger"> Série terminée </span>  
                                     </div>
                                     <div ng-show="collection.estAJour(collection.product[collection.i].possede,
-                                                            collection.product[collection.i].total)">
+                                                                        collection.product[collection.i].total)">
                                         <span class="label label-success"> A jour</span>
                                     </div> <br/>
                                 </div>
                                 <!-- Onglet Parametre -->
                                 <div ng-show="panel.isSelected(2)"
                                      ng-controller="ParameterController
-                                                     as
-                                                     Parameter" >
+                                                                         as
+                                                                         Parameter" >
                                     <h4> Réglages </h4>
                                     <div class="btn-group">
                                         <button ng-hide="collection.estAJour(collection.product[collection.i].possede,
-                                                                    collection.product[collection.i].total)" 
+                                                                            collection.product[collection.i].total)" 
                                                 ng-click="Parameter.addTomePossede(collection.product[collection.i])" 
                                                 type="button" class="btn btn-default"> 
                                             Ajout tome 
@@ -91,27 +91,34 @@
                                 </div>  
                                 <!-- Onglet ajout tomes -->
                                 <div ng-show="panel.isSelected(3)">
-                                    <form>
+                                    <form name="tomeForm"
+                                          ng-controller="FormController as form"
+                                          ng-submit="tomeForm.$valid && form.addNewAlbum()"
+                                          novalidate>
                                         <div class="form-group">
                                             <label for="titreInput"> Titre </label>
-                                            <input id="titreInput" class="form-control" type="text"  placeholder="Titre..."/>
+                                            <input id="titreInput" ng-model="form.tome.titre"class="form-control" type="text" required/>
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-6">
                                                 <label for="possedeInput"> Tome(s) possedé(s) </label>
-                                                <input id="possedeInput" class="form-control" type="text" />
+                                                <input id="possedeInput" ng-model="form.tome.tomePossede" class="form-control" type="number" min="1" required/>
                                             </div>
                                             <div class="col-xs-6">
                                                 <label for="totalInput"> Nombre total de tomes </label>
-                                                <input id="totalInput" class="form-control" type="text" />
+                                                <input id="totalInput" ng-model="form.tome.tomeTotal" class="form-control" type="number" min="1" required/>
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label for="imgInput"> Image </label>
+                                            <input id="imgInput" ng-model="form.tome.image" class="form-control" required />
+                                        </div>    
+                                        <div class="form-group">
                                             <label for="termineeInput"> Série terminée </label>
-                                            <input id="termineeInput"  type="checkbox" value="1" />
+                                            <input id="termineeInput"  ng-model="form.tome.terminee" type="checkbox" value="1" />
                                         </div>   
                                         <div>
-                                            <button type="button" class="btn btn-primary center-block">Ajouter</button>
+                                            <button type="submit" class="btn btn-primary center-block" ng-class="{disabled:!tomeForm.$valid}" >Ajouter</button>
                                         </div>
                                     </form>
                                 </div>
@@ -124,7 +131,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-3"></div>
+                <div class="col-sm-2"></div>
             </div>
         </div>
     </body>
